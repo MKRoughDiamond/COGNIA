@@ -10,8 +10,9 @@ from torch.optim import Adam
 
 sys.path.insert(0,'../../interface')
 
-from PerceptModule import PerceptModule
-class TrainMNIST(PerceptModule):
+from CogModule import CogModule
+
+class TrainMNIST(CogModule):
     def __init__(self,model,model_parameter):
         self.model=model(**model_parameter)
         self.USING_GPU=False
@@ -111,7 +112,10 @@ class TrainMNIST(PerceptModule):
 if __name__=='__main__':
     testset=MNIST("./",train=False,transform=Compose([ToTensor()]),download=True)
     a=TrainMNIST(MNISTCNN,{'IMG_SIZE':28})
-    a.load_model('./temp.pt')
+    try:
+        a.load_model('./temp.pt')
+    except Exception:
+        pass
     a.set_gpu().set_optimizers(Adam,nn.CrossEntropyLoss(),0.005)
     a.set_dataloader("./",256,transform=Compose([ToTensor()]))
     a.fit(1,True)

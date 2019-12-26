@@ -1,4 +1,4 @@
-class PerceptModule:
+class CogModule:
     def __init__(self,model,model_parameter,**kwargs):
         raise NotImplementedError
 
